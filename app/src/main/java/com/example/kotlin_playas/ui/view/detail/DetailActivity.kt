@@ -7,9 +7,11 @@ import com.example.kotlin_playas.databinding.ActivityDetailBinding
 import com.example.kotlin_playas.ui.adapter.tabs.DetailPageViewAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import dagger.hilt.android.AndroidEntryPoint
 
 private lateinit var binding: ActivityDetailBinding
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

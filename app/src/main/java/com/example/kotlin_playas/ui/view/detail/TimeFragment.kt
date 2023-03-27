@@ -18,9 +18,10 @@ import com.example.kotlin_playas.ui.viewmodel.DetailViewModel
 import com.google.android.material.imageview.ShapeableImageView
 import com.tomergoldst.tooltips.ToolTip
 import com.tomergoldst.tooltips.ToolTipsManager
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-
+@AndroidEntryPoint
 class TimeFragment : Fragment() {
 
     private lateinit var binding : FragmentTimeBinding

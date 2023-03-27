@@ -24,8 +24,9 @@ import com.example.kotlin_playas.data.model.beach.Image
 import com.example.kotlin_playas.databinding.FragmentDetailBinding
 import com.example.kotlin_playas.ui.adapter.CustomGalleryAdapter
 import com.example.kotlin_playas.ui.viewmodel.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var binding : FragmentDetailBinding

@@ -29,6 +29,8 @@ import com.example.kotlin_playas.ui.view.main.MapFragment.Companion.roundTo
 import com.example.kotlin_playas.ui.view.main.map.CustomInfoWindow
 import com.example.kotlin_playas.ui.view.main.map.DynamicRadiusMarkerClusterer
 import com.example.kotlin_playas.ui.viewmodel.BeachViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.*
 import okhttp3.internal.userAgent
 import org.osmdroid.bonuspack.kml.KmlDocument
@@ -61,6 +63,7 @@ const val USER_OVERLAY_2 : Int = 2
 const val KML_OVERLAY_3 : Int = 3
 
 const val KML_MURCIA_0 : Int = 0
+@AndroidEntryPoint
 class MapFragment : Fragment() {
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1

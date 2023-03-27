@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/mapMainLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.view.main.MapFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/mp_fmMainMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_fmCopyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/copyright_white"
+        android:textColor="@color/gray"
+        android:text="© OpenStreetMap contributors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/buttons_menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ToggleButton
+            android:id="@+id/tb_fmShowCensored"
+            android:checked="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tb_fmShowRouter"
+            style="@style/check_button" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/check_text"
+            android:text="@string/sensible_content"
+            app:layout_constraintBottom_toTopOf="@id/tb_fmShowRouter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tb_fmShowCensored"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ToggleButton
+            android:id="@+id/tb_fmShowRouter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_fmShowCensored"
+            style="@style/check_button" />
+
+        <TextView
+            style="@style/check_text"
+            android:text="@string/display_route"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/tb_fmShowRouter"
+            app:layout_constraintTop_toBottomOf="@+id/tb_fmShowCensored" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_fmDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/route_stroke"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@id/ll_fmBlockMap"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="108 km" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_fmBlockMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corner"
+        app:layout_constraintBottom_toTopOf="@id/tv_fmCopyright"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="20dp"
+        android:padding="15dp"
+        >
+    <ToggleButton
+        android:id="@+id/tb_fmBlockMap"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/image_btn_focus"
+        android:backgroundTint="@color/route_stroke"
+        android:checked="false"
+        android:textOff=""
+        android:textOn=""/>
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/pb_fmLoadingBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/sea_blue"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

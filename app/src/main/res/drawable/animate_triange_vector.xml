@@ -1,0 +1,7 @@
+<!-- The AnimatedVectorDrawable, filename triangle_animated_vector_drawable.xml -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+android:drawable="@drawable/triangle_vector_drawable">
+<target
+    android:name="triangle"
+    android:animation="@animator/triangle_color_animator" />
+</animated-vector>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Kotlin_Playas</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detalles">Details</string>
+    <string name="tiempo">Weather</string>
+    <string name="bichoBeach">Bicho\'s pelao beach</string>
+    <string name="noData">...</string>
+    <string name="loremIpsumDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas semper turpis urna, sit amet bibendum ex facilisis vitae.
+        Nulla euismod mauris eu dolor dictum, a dapibus est efficitur. Sed purus neque, posuere quis nisl at, lobortis tristique mauris.
+        Suspendisse vehicula nisi et justo cursus, vitae vehicula arcu hendrerit. Praesent sollicitudin vel tellus sed lobortis.
+        Integer congue nibh vitae odio pulvinar porttitor.
+        Integer viverra diam ipsum, vel vehicula ex suscipit ac.
+        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;</string>
+    <string name="chooseMail">Choose app to use:</string>
+    <string name="display_route">Routes</string>
+    <string name="sensible_content">Censor sensible content</string>
+</resources>

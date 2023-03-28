@@ -1,5 +1,6 @@
 package com.example.kotlin_playas.data
 
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -9,20 +10,24 @@ import com.example.kotlin_playas.data.model.BeachProvider
 import com.example.kotlin_playas.data.model.aemet.base.AemetBase
 import com.example.kotlin_playas.data.model.aemet.info.AemetInfo
 import com.example.kotlin_playas.data.model.beach.Beach
+import com.example.kotlin_playas.data.model.beach.dao.BeachDAO
 import com.example.kotlin_playas.data.network.BeachDatabase
 import com.example.kotlin_playas.data.network.BeachService
+import javax.inject.Inject
+import javax.inject.Named
 
-class BeachRepository {
+class BeachRepository @Inject constructor(
+    private val service: BeachService,
+    private val appContext : Application,
+    private val beachDAO: BeachDAO,
+    @Named("internet_status")
+    private val internetStatus: Boolean
+) {
 
-    private val service = BeachService()
-
-
-    suspend fun getAllBeaches(ctx:Context):List<Beach>{
+    suspend fun getAllBeaches():List<Beach>{
         var beachList : List<Beach> = emptyList()
-        if (database == null){
-            initiateDatabase(ctx)
-        }
-        if (internetStatus(ctx)){
+
+        if (internetStatus){
             beachList = service.getBeaches()
             saveBeaches(beachList)
         }else{
@@ -32,47 +37,30 @@ class BeachRepository {
         return beachList
 
     }
-    suspend fun initiateDatabase (context: Context){
-        database = Room.databaseBuilder(context,BeachDatabase::class.java,"beachdb").build()
-    }
 
     suspend fun getBeachById(id : Int):Beach{
-        return database?.beachDao()?.selectBeachById(id) ?: Beach()
+        return beachDAO.selectBeachById(id) ?: Beach()
     }
 
     suspend fun getBeaches() : List<Beach>{
-        return database?.beachDao()?.selectBeaches() ?: emptyList()
+        return beachDAO.selectBeaches() ?: emptyList()
     }
 
     suspend fun saveBeaches(beachList : List<Beach>){
         for (beach in beachList){
-            database?.beachDao()?.insertBeach(beach)
+            beachDAO.insertBeach(beach)
         }
     }
 
     suspend fun getAemetBase(aemetId : Int): AemetBase?{
-
-        val responseBase = service.getAemetBase(aemetId)
-        return responseBase
+        return service.getAemetBase(aemetId)
     }
 
     suspend fun getAemetInfo(direction : String): AemetInfo{
-        val responseInfo = service.getAemetInfo(direction)
-        return responseInfo[0]
+        return service.getAemetInfo(direction).first()
     }
 
     companion object{
-        private var database : BeachDatabase? = null
-        fun internetStatus(context: Context): Boolean {
-            var cm: ConnectivityManager = context.getSystemService(AppCompatActivity.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-            var status = false
-            if (cm != null) {
-                var netCap = cm.getNetworkCapabilities(cm.activeNetwork)
-
-                status = netCap?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: false
-            }
-            return status
-        }
     }
 }

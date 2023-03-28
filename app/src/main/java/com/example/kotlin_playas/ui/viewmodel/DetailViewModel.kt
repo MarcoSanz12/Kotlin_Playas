@@ -6,26 +6,34 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlin_playas.data.model.BeachProvider
 import com.example.kotlin_playas.data.model.aemet.info.AemetInfo
-import com.example.kotlin_playas.data.model.aemet.symbol.SymbolProvider
+import com.example.kotlin_playas.data.model.aemet.symbol.AemetSymbol
 import com.example.kotlin_playas.data.model.beach.Beach
 import com.example.kotlin_playas.uses.GetAemetBaseCaseUse
 import com.example.kotlin_playas.uses.GetAemetInfoCaseUse
 import com.example.kotlin_playas.uses.GetSelectedBeachCaseUse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Named
 
-class DetailViewModel : ViewModel() {
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    private val getSelectedBeachCaseUse : GetSelectedBeachCaseUse,
+    private val getAemetBaseCaseUse: GetAemetBaseCaseUse,
+    private val getAemetInfoCaseUse: GetAemetInfoCaseUse,
+    @Named("symbol_list")
+    private val symbolList : List<AemetSymbol>
+) : ViewModel() {
 
     val selBeach = MutableLiveData<Beach>()
     val aemetInfo = MutableLiveData<AemetInfo>()
     val isLoading = MutableLiveData<Boolean>()
     val isAemetInfo = MutableLiveData<Boolean>()
 
-    var getSelectedBeachCaseUse = GetSelectedBeachCaseUse()
+
     @SuppressLint("NullSafeMutableLiveData")
     fun loadAemetInfo(){
-
-
 
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)
@@ -36,16 +44,12 @@ class DetailViewModel : ViewModel() {
             selBeach.postValue(selectedBeach)
 
             var idAemet = selectedBeach.idAemet ?: 0
-            var getAemetBaseCaseUse = GetAemetBaseCaseUse(idAemet)
-
-            val aemetBase = getAemetBaseCaseUse()
+            val aemetBase = getAemetBaseCaseUse(idAemet)
 
             aemetBase.let {
                     aemetBase ->
                 if (aemetBase!= null) {
-                    var getAemetInfoCaseUse =
-                        GetAemetInfoCaseUse(getDetailsFromUrl(aemetBase.data!!))
-                    val aemetValue: AemetInfo = getAemetInfoCaseUse()
+                    val aemetValue: AemetInfo = getAemetInfoCaseUse(getDetailsFromUrl(aemetBase.data!!))
                     aemetInfo.postValue(aemetValue)
                     if (aemetValue.id != null){
                         isAemetInfo.postValue(true)
@@ -62,13 +66,13 @@ class DetailViewModel : ViewModel() {
     }
 
     fun getSymbolUrl(stringDescr: String?):String{
-        val provider = SymbolProvider()
-        var symbol = provider.symbolList.first().url
 
-        for (i in 0 until provider.symbolList.size){
+        var symbol = symbolList.first().url
+
+        for (i in 0 until symbolList.size){
             // buscamos descripción que encaje con la del simbolo
-            if (stringDescr.equals(provider.symbolList[i].name)){
-                symbol = provider.symbolList[i].url
+            if (stringDescr.equals(symbolList[i].name)){
+                symbol = symbolList[i].url
                 break
             }
         }

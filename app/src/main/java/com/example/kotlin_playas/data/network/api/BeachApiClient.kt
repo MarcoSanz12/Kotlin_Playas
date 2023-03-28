@@ -1,4 +1,4 @@
-package com.example.kotlin_playas.data.network
+package com.example.kotlin_playas.data.network.api
 
 import com.example.kotlin_playas.data.model.aemet.base.AemetBase
 import com.example.kotlin_playas.data.model.aemet.info.AemetInfo

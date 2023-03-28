@@ -11,10 +11,14 @@ import com.example.kotlin_playas.data.model.beach.Beach
 import com.example.kotlin_playas.uses.GetAemetBaseCaseUse
 import com.example.kotlin_playas.uses.GetAemetInfoCaseUse
 import com.example.kotlin_playas.uses.GetBeachesCaseUse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BeachViewModel : ViewModel(){
+@HiltViewModel
+class BeachViewModel @Inject constructor(
+    val getBeachesCaseUse : GetBeachesCaseUse) : ViewModel(){
 
     val beachList = MutableLiveData<List<Beach>>()
     val isLoading = MutableLiveData<Boolean>()
@@ -24,13 +28,11 @@ class BeachViewModel : ViewModel(){
     val distanceRoute = MutableLiveData<Double>()
 
 
-    var getBeachesCaseUse  = GetBeachesCaseUse()
-
 
     fun onCreate(ctx : Context){
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)
-            val result = getBeachesCaseUse(ctx)
+            val result = getBeachesCaseUse()
 
             if (!result.isNullOrEmpty()){
                 beachList.postValue(result)
